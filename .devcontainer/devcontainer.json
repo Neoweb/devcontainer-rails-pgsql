@@ -1,0 +1,37 @@
+// For format details, see https://aka.ms/devcontainer.json. For config options, see the README at:
+// https://github.com/microsoft/vscode-dev-containers/tree/v0.183.0/containers/ruby
+{
+	"name": "Ruby on Rails + Postgresql + Mailhog",
+	"dockerComposeFile": "docker-compose.yml",
+	"service": "webapp",
+	"workspaceFolder": "/workspaces/webapp",
+
+	// Set *default* container specific settings.json values on container create.
+	"settings": {
+		"terminal.integrated.shell.linux": "/bin/bash",
+		"stripe.cliInstallPath": "/usr/local/bin/stripe"
+	},
+
+	// Add the IDs of extensions you want installed when the container is created.
+	"extensions": [
+		"aki77.rails-db-schema",
+		"castwide.solargraph",
+		"ckolkman.vscode-postgres",
+		"eamodio.gitlens",
+		"kaiwood.endwise",
+		"misogi.ruby-rubocop",
+		"rayhanw.erb-helpers",
+		"rebornix.Ruby",
+		"stripe.vscode-stripe"
+	],
+	
+	// Use 'forwardPorts' to make a list of ports inside the container available locally.
+	"forwardPorts": [1025, 3000, 5432, 8080],
+
+	// Use 'postCreateCommand' to run commands after the container is created.
+	"postCreateCommand": "ruby --version",
+
+	// Comment out connect as root instead. More info: https://aka.ms/vscode-remote/containers/non-root.
+	"remoteUser": "vscode"
+
+}

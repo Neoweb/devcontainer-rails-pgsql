@@ -1,0 +1,63 @@
+version: "3.9"
+
+volumes:
+  database_data:
+
+services:
+    database:
+        image:   postgres:13-alpine
+        restart: unless-stopped
+        environment:
+            POSTGRES_DB:       application
+            POSTGRES_USER:     application
+            POSTGRES_PASSWORD: application
+        volumes:
+            - database_data:/var/lib/postgresql/data
+        ports:
+            - 5432:5432
+
+    smtp:
+        restart: unless-stopped
+        image:   mailhog/mailhog:latest
+        ports:
+            - 8080:8025
+
+    webapp:
+        build:
+            context:   .
+            dockerfile: ruby-on-rails/Dockerfile
+            args:
+                VARIANT:      "2.7"
+                # Options
+                INSTALL_NODE: "true"
+                NODE_VERSION: "lts/*"
+        command: "sleep infinity"
+        restart: unless-stopped
+        tty:     true
+        environment:
+            # Postgres
+            PG_NAME:              application
+            PG_USER:              application
+            PG_HOST:              database
+            PG_PORT:              5432
+            PG_PASSWORD:          application
+            # App
+            APP_PORT:             3000
+            APP_DOMAIN:           'localhost'
+            APP_URL:              'http://localhost:3000'
+            RAILS_ENV:            development
+            # SMTP
+            SMTP_ADDRESS:         'smtp'
+            SMTP_DOMAIN:          'smtp'
+            SMTP_FROM:            'no-reply'
+            SMTP_PASSWORD:        ''
+            SMTP_PORT:            1025
+            SMTP_STARTTLS_AUTO:   'false'
+            SMTP_USERNAME:        ''
+            SMTP_SSL_VERIFY_MODE: 'none'
+        volumes:
+            - "..:/workspaces/webapp:cached"
+        working_dir: /workspaces/webapp
+        depends_on:
+            - database
+            - smtp
