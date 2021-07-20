@@ -9,7 +9,10 @@
 	// Set *default* container specific settings.json values on container create.
 	"settings": {
 		"terminal.integrated.shell.linux": "/bin/bash",
-		"stripe.cliInstallPath": "/usr/local/bin/stripe"
+		"stripe.cliInstallPath": "/usr/local/bin/stripe",
+		"emmet.includeLanguages": {
+			"erb": "html"
+		}
 	},
 
 	// Add the IDs of extensions you want installed when the container is created.
@@ -17,6 +20,7 @@
 		"aki77.rails-db-schema",
 		"castwide.solargraph",
 		"ckolkman.vscode-postgres",
+		"craigmaslowski.erb",
 		"eamodio.gitlens",
 		"kaiwood.endwise",
 		"misogi.ruby-rubocop",
