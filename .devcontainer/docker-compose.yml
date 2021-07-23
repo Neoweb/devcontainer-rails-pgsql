@@ -55,6 +55,8 @@ services:
             SMTP_STARTTLS_AUTO:   'false'
             SMTP_USERNAME:        ''
             SMTP_SSL_VERIFY_MODE: 'none'
+        ports:
+            - 3000:3000
         volumes:
             - "..:/workspaces/webapp:cached"
         working_dir: /workspaces/webapp
